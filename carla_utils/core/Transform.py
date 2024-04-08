@@ -6,7 +6,7 @@ from .Rotation import Rotation
 
 class Transform:
     """
-    A data model class to represent a transformation of a 3D object.
+    A data model class to represent a transformation of a 3D instance.
     Includes location and rotation.
     """
 
@@ -22,7 +22,7 @@ class Transform:
 
     def as_carla_transform(self) -> carla.Transform:
         """
-        Convert this Transform object to a carla.Transform object.
+        Convert this Transform instance to a carla.Transform instance.
 
         :return: carla.Transform
         """
@@ -34,10 +34,10 @@ class Transform:
     @staticmethod
     def from_carla_transform(carla_transform: carla.Transform) -> 'Transform':
         """
-        Convert a carla.Transform object to a Transform object.
+        Convert a carla.Transform instance to a Transform instance.
 
-        :param carla_transform: carla.Transform object
-        :return: Transform object
+        :param carla_transform: carla.Transform instance
+        :return: Transform instance
         """
         return Transform(
             x=carla_transform.location.x,
@@ -51,11 +51,11 @@ class Transform:
     @staticmethod
     def from_location_and_rotation(location: Location, rotation: Rotation) -> 'Transform':
         """
-        Create a Transform object from a Location and a Rotation object.
+        Create a Transform instance from a Location and a Rotation instance.
 
-        :param location: Location object
-        :param rotation: Rotation object
-        :return: Transform object
+        :param location: Location instance
+        :param rotation: Rotation instance
+        :return: Transform instance
         """
         tf = Transform()
         tf.location = location

@@ -19,7 +19,7 @@ class Location(Vector3):
                  y: float = 0.0,
                  z: float = 0.0):
         """
-        Construct a default Location object.
+        Construct a default Location instance.
 
         :param x: distance from the origin along the X-axis
         :param y: distance from the origin along the Y-axis
@@ -31,16 +31,16 @@ class Location(Vector3):
         """
         Convert this location to a CARLA location.
 
-        :return: carla.Location object
+        :return: carla.Location instance
         """
         return carla.Location(x=self.x, y=self.y, z=self.z)
 
     @staticmethod
     def from_carla_location(carla_location: carla.Location) -> 'Location':
         """
-        Convert a carla.Location to a Location object.
+        Convert a carla.Location to a Location instance.
 
-        :param carla_location: carla.Location object
-        :return: Location object
+        :param carla_location: carla.Location instance
+        :return: Location instance
         """
         return Location(x=carla_location.x, y=carla_location.y, z=carla_location.z)

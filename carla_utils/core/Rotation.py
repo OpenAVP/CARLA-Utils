@@ -22,7 +22,7 @@ class Rotation(Vector3):
                  pitch: float = 0.0,
                  yaw: float = 0.0):
         """
-        Construct a default Rotation object.
+        Construct a default Rotation instance.
 
         :param roll: the x-axis rotation angle in degrees
         :param pitch: the y-axis rotation angle in degrees
@@ -56,18 +56,18 @@ class Rotation(Vector3):
 
     def as_carla_rotation(self) -> carla.Rotation:
         """
-        Convert the Rotation to a carla.Rotation object.
+        Convert the Rotation to a carla.Rotation instance.
 
-        :return: carla.Rotation object
+        :return: carla.Rotation instance
         """
         return carla.Rotation(roll=self.roll, pitch=self.pitch, yaw=self.yaw)
 
     @staticmethod
     def from_carla_rotation(carla_rotation: carla.Rotation) -> 'Rotation':
         """
-        Convert a carla.Rotation object to a Rotation object.
+        Convert a carla.Rotation instance to a Rotation instance.
 
-        :param carla_rotation: carla.Rotation object
-        :return: Rotation object
+        :param carla_rotation: carla.Rotation instance
+        :return: Rotation instance
         """
         return Rotation(roll=carla_rotation.roll, pitch=carla_rotation.pitch, yaw=carla_rotation.yaw)

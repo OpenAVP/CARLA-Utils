@@ -21,7 +21,7 @@ class Vector3:
                  y: float = 0.0,
                  z: float = 0.0):
         """
-        Construct a default Vector3 object.
+        Construct a default Vector3 instance.
 
         :param x: the x-coordinate of the vector
         :param y: the y-coordinate of the vector
@@ -33,18 +33,18 @@ class Vector3:
 
     def as_carla_vector3d(self) -> carla.Vector3D:
         """
-        Convert the Vector3 object to a carla.Vector3D object.
+        Convert the Vector3 instance to a carla.Vector3D instance.
 
-        :return: carla.Vector3D object
+        :return: carla.Vector3D instance
         """
         return carla.Vector3D(x=self.x, y=self.y, z=self.z)
 
     @staticmethod
     def from_carla_vector3d(carla_vector3d: carla.Vector3D) -> 'Vector3':
         """
-        Convert a carla.Vector3D object to a Vector3 object.
+        Convert a carla.Vector3D instance to a Vector3 instance.
 
-        :param carla_vector3d: carla.Vector3D object
+        :param carla_vector3d: carla.Vector3D instance
         :return: Vector3
         """
         return Vector3(x=carla_vector3d.x, y=carla_vector3d.y, z=carla_vector3d.z)
