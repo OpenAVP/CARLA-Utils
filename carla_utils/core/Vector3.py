@@ -3,7 +3,7 @@ import carla
 
 class Vector3:
     """
-    A class to represent a 3D vector.
+    A data model class to represent a 3D vector.
 
     Similar 3D vectors in different software defined coordinate systems should be converted to Vector3 and promoted
     in the context.

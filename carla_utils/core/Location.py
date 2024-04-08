@@ -5,7 +5,7 @@ from .Vector3 import Vector3
 
 class Location(Vector3):
     """
-    A class to represent a location in the world.
+    A data model class to represent a location in the world.
 
     Coordinate system is defined as same as UE4 and CARLA:
 

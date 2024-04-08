@@ -5,7 +5,7 @@ from .Vector3 import Vector3
 
 class Rotation(Vector3):
     """
-    A class to represents a rotation in 3D space.
+    A data model class to represents a rotation in 3D space.
 
     Coordinate system is defined as same as UE4 and CARLA:
 
