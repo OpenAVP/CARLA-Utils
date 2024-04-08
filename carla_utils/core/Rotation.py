@@ -21,6 +21,13 @@ class Rotation(Vector3):
                  roll: float = 0.0,
                  pitch: float = 0.0,
                  yaw: float = 0.0):
+        """
+        Construct a default Rotation object.
+
+        :param roll: the x-axis rotation angle in degrees
+        :param pitch: the y-axis rotation angle in degrees
+        :param yaw: the z-axis rotation angle in degrees
+        """
         super().__init__(x=roll, y=pitch, z=yaw)
         self.roll = self.x
         self.pitch = self.y
