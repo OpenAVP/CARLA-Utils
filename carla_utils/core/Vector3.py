@@ -4,6 +4,16 @@ import carla
 class Vector3:
     """
     A class to represent a 3D vector.
+
+    Similar 3D vectors in different software defined coordinate systems should be converted to Vector3 and promoted
+    in the context.
+
+    Coordinate system is defined as same as UE4 and CARLA:
+
+        - X-axis: forward
+        - Y-axis: right
+        - Z-axis: up
+
     """
 
     def __init__(self,
