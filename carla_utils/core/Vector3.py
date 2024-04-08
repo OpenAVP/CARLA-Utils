@@ -17,9 +17,9 @@ class Vector3:
     """
 
     def __init__(self,
-                 x: float,
-                 y: float,
-                 z: float):
+                 x: float = 0.0,
+                 y: float = 0.0,
+                 z: float = 0.0):
         """
         Construct a default Vector3 object.
 
