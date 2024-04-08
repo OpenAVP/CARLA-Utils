@@ -2,8 +2,7 @@ import uuid
 import carla
 from typing import List, Union
 
-from .Blueprint import Blueprint
-from ..core import Transform, Vector3
+from ..core import Transform, Vector3, Blueprint
 
 
 class Actor:
