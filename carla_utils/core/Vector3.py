@@ -35,7 +35,7 @@ class Vector3:
         """
         Convert the Vector3 object to a carla.Vector3D object.
 
-        :return: carla.Vector3D
+        :return: carla.Vector3D object
         """
         return carla.Vector3D(x=self.x, y=self.y, z=self.z)
 
