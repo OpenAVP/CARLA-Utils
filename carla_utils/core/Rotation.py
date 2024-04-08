@@ -7,13 +7,13 @@ class Rotation(Vector3):
     """
     A class to represents a rotation in 3D space.
 
-    The right side is the positive direction and is described in terms of angles in degrees.
-
     Coordinate system is defined as same as UE4 and CARLA:
 
-        - X-axis: rotation angle in degrees
-        - Y-axis: pitch angle in degrees
-        - Z-axis: yaw angle in degrees
+        - Right side positive
+        - Angles are in degrees
+        - X-axis: roll
+        - Y-axis: pitch
+        - Z-axis: yaw
 
     """
 
