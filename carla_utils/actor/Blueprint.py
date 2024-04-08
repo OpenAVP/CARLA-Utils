@@ -7,7 +7,7 @@ class Blueprint:
     A data model class to represent a blueprint structure.
 
     This class temporary holds the blueprint with attribute needed to spawn the Actor.
-    When actor spawn procedure invoked, this class will be converted to carla.Blueprint object.
+    When actor spawn procedure invoked, this class will be converted to carla.Blueprint instance.
     """
 
     def __init__(self, blueprint_name: str):
@@ -39,13 +39,13 @@ class Blueprint:
 
     def as_carla_blueprint(self, carla_world: carla.World) -> carla.ActorBlueprint:
         """
-        A method to convert Blueprint to carla.ActorBlueprint object.
+        A method to convert Blueprint to carla.ActorBlueprint instance.
 
         Use carla.World to find the matched blueprint from the blueprint library.
         This method should be the last one called before the actor spawn.
 
-        :param carla_world: carla.World object
-        :return: carla.ActorBlueprint object
+        :param carla_world: carla.World instance
+        :return: carla.ActorBlueprint instance
         :raise IndexError: if the blueprint not found in the world's blueprint library
                            or attribute not found in the blueprint
 
