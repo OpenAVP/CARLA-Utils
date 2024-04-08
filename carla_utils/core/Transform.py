@@ -6,7 +6,8 @@ from .Rotation import Rotation
 
 class Transform:
     """
-    A data model class to represent a transformation of a 3D object. Includes location and rotation.
+    A data model class to represent a transformation of a 3D object.
+    Includes location and rotation.
     """
 
     def __init__(self, *,
@@ -60,4 +61,3 @@ class Transform:
         tf.location = location
         tf.rotation = rotation
         return tf
-    
