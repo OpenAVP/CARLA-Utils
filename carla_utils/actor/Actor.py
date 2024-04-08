@@ -18,6 +18,8 @@ class Actor:
         self._children = []
         # carla actor instance
         self._carla_actor = None
+        # options
+        self._option_carla_physics = True
 
     def __del__(self):
         self.invoke_destroy(no_hook=True)
@@ -239,6 +241,7 @@ class Actor:
         :param option: True to enable, False to disable.
         :return: return self for method chaining.
         """
+        self._option_carla_physics = option
         if self.is_alive():
             self.carla_actor.set_simulate_physics(option)
         return self
@@ -287,7 +290,8 @@ class Actor:
 
         :return: None
         """
-        pass
+        self.use_carla_physics(option=self._option_carla_physics)
+        return
 
     def on_actor_destroy(self):
         """
