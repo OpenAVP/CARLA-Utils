@@ -40,10 +40,11 @@ class Vector3:
         return carla.Vector3D(x=self.x, y=self.y, z=self.z)
 
     @staticmethod
-    def from_carla_vector3d(self) -> 'Vector3':
+    def from_carla_vector3d(carla_vector3d: carla.Vector3D) -> 'Vector3':
         """
         Convert a carla.Vector3D object to a Vector3 object.
 
+        :param carla_vector3d: carla.Vector3D object
         :return: Vector3
         """
-        return Vector3(x=self.x, y=self.y, z=self.z)
+        return Vector3(x=carla_vector3d.x, y=carla_vector3d.y, z=carla_vector3d.z)
