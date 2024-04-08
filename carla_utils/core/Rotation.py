@@ -29,9 +29,30 @@ class Rotation(Vector3):
         :param yaw: the z-axis rotation angle in degrees
         """
         super().__init__(x=roll, y=pitch, z=yaw)
-        self.roll = self.x
-        self.pitch = self.y
-        self.yaw = self.z
+
+    @property
+    def roll(self) -> float:
+        return self.x
+
+    @roll.setter
+    def roll(self, value: float):
+        self.x = value
+
+    @property
+    def pitch(self) -> float:
+        return self.y
+
+    @pitch.setter
+    def pitch(self, value: float):
+        self.y = value
+
+    @property
+    def yaw(self) -> float:
+        return self.z
+
+    @yaw.setter
+    def yaw(self, value: float):
+        self.z = value
 
     def as_carla_rotation(self) -> carla.Rotation:
         """
