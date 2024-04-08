@@ -7,8 +7,15 @@ from ..core import Transform, Vector3
 
 
 class Actor:
+    """
+    Actor is a wrapper class for carla.Actor.
+    """
 
     def __init__(self, blueprint_name: str):
+        """
+        Construct a Actor instance.
+        :param blueprint_name: the name of the blueprint.
+        """
         # basic info
         self._id = uuid.uuid1()
         self._blueprint = Blueprint(blueprint_name)
