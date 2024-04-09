@@ -28,11 +28,11 @@ class RunningManager:
         self._option_sync_primary_mode = False
         self._option_strict_time_mode = False
         self._sync_fixed_delta_time = 0.0  # in seconds
+        # flags
+        self._flag_internal_exit = False
         # running control
         self._control_thread = Thread(target=self._control_thread_func, daemon=True)
         self._control_thread.start()
-        # flags
-        self._flag_internal_exit = False
 
     def __del__(self):
         # release sync primary mode when object deleted
