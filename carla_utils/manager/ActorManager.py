@@ -13,6 +13,8 @@ class ActorManager:
         """
         Construct a new ActorManager instance
 
+        This instance should create after CarlaContext created a connection.
+
         :param world: carla.World instance
         """
         self._carla_world = world
