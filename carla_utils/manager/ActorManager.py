@@ -23,6 +23,13 @@ class ActorManager:
         self.invoke_actor_destroy(self.registry)
 
     @property
+    def carla_world(self) -> carla.World:
+        """
+        The carla.World instance that ActorManager operates on
+        """
+        return self._carla_world
+
+    @property
     def registry(self) -> Set[Actor]:
         """
         A list of actors that are managed by this ActorManager
@@ -87,7 +94,7 @@ class ActorManager:
         for a in actors:
             attach_target = a.parent.carla_actor if a.parent else None
             try:
-                carla_actor = carla.World.spawn_actor(a.blueprint.as_carla_blueprint(self._carla_world),
+                carla_actor = carla.World.spawn_actor(a.blueprint.as_carla_blueprint(self.carla_world),
                                                       a.transform.as_carla_transform(),
                                                       attach_to=attach_target)
                 a.invoke_bind_carla_actor(carla_actor)
