@@ -39,12 +39,12 @@ class Vector3:
         """
         return carla.Vector3D(x=self.x, y=self.y, z=self.z)
 
-    @staticmethod
-    def from_carla_vector3d(carla_vector3d: carla.Vector3D) -> 'Vector3':
+    @classmethod
+    def from_carla_vector3d(cls, carla_vector3d: carla.Vector3D) -> 'Vector3':
         """
         Convert a carla.Vector3D instance to a Vector3 instance.
 
         :param carla_vector3d: carla.Vector3D instance
         :return: Vector3
         """
-        return Vector3(x=carla_vector3d.x, y=carla_vector3d.y, z=carla_vector3d.z)
+        return cls(x=carla_vector3d.x, y=carla_vector3d.y, z=carla_vector3d.z)

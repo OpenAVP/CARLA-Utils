@@ -31,15 +31,15 @@ class Transform:
             rotation=self.rotation.as_carla_rotation()
         )
 
-    @staticmethod
-    def from_carla_transform(carla_transform: carla.Transform) -> 'Transform':
+    @classmethod
+    def from_carla_transform(cls, carla_transform: carla.Transform) -> 'Transform':
         """
         Convert a carla.Transform instance to a Transform instance.
 
         :param carla_transform: carla.Transform instance
         :return: Transform instance
         """
-        return Transform(
+        return cls(
             x=carla_transform.location.x,
             y=carla_transform.location.y,
             z=carla_transform.location.z,
@@ -48,8 +48,8 @@ class Transform:
             roll=carla_transform.rotation.roll
         )
 
-    @staticmethod
-    def from_location_and_rotation(location: Location, rotation: Rotation) -> 'Transform':
+    @classmethod
+    def from_location_and_rotation(cls, location: Location, rotation: Rotation) -> 'Transform':
         """
         Create a Transform instance from a Location and a Rotation instance.
 
@@ -57,7 +57,7 @@ class Transform:
         :param rotation: Rotation instance
         :return: Transform instance
         """
-        tf = Transform()
+        tf = cls()
         tf.location = location
         tf.rotation = rotation
         return tf

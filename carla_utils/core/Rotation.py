@@ -62,12 +62,12 @@ class Rotation(Vector3):
         """
         return carla.Rotation(roll=self.roll, pitch=self.pitch, yaw=self.yaw)
 
-    @staticmethod
-    def from_carla_rotation(carla_rotation: carla.Rotation) -> 'Rotation':
+    @classmethod
+    def from_carla_rotation(cls, carla_rotation: carla.Rotation) -> 'Rotation':
         """
         Convert a carla.Rotation instance to a Rotation instance.
 
         :param carla_rotation: carla.Rotation instance
         :return: Rotation instance
         """
-        return Rotation(roll=carla_rotation.roll, pitch=carla_rotation.pitch, yaw=carla_rotation.yaw)
+        return cls(roll=carla_rotation.roll, pitch=carla_rotation.pitch, yaw=carla_rotation.yaw)

@@ -35,12 +35,12 @@ class Location(Vector3):
         """
         return carla.Location(x=self.x, y=self.y, z=self.z)
 
-    @staticmethod
-    def from_carla_location(carla_location: carla.Location) -> 'Location':
+    @classmethod
+    def from_carla_location(cls, carla_location: carla.Location) -> 'Location':
         """
         Convert a carla.Location to a Location instance.
 
         :param carla_location: carla.Location instance
         :return: Location instance
         """
-        return Location(x=carla_location.x, y=carla_location.y, z=carla_location.z)
+        return cls(x=carla_location.x, y=carla_location.y, z=carla_location.z)
