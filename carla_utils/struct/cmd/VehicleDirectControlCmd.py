@@ -41,10 +41,15 @@ class VehicleDirectControlCmd:
         Convert the command to a carla.VehicleControl object.
         :return: carla.VehicleControl instance
         """
+        # clean data
+        throttle = max(0.0, min(1.0, self.throttle))
+        steer = max(-1.0, min(1.0, self.steer))
+        brake = max(0.0, min(1.0, self.brake))
+        # construct and return
         return carla.VehicleControl(
-            throttle=self.throttle,
-            steer=self.steer,
-            brake=self.brake,
+            throttle=throttle,
+            steer=steer,
+            brake=brake,
             hand_brake=self.hand_brake,
             reverse=self.reverse,
             manual_gear_shift=self.manual_gear_shift,
