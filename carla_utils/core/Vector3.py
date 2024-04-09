@@ -1,4 +1,5 @@
 import carla
+import math
 
 
 class Vector3:
@@ -30,6 +31,10 @@ class Vector3:
         self.x = x
         self.y = y
         self.z = z
+
+    @property
+    def magnitude(self):
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
 
     def as_carla_vector3d(self) -> carla.Vector3D:
         """
