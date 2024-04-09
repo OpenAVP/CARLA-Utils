@@ -9,15 +9,15 @@ class ActorManager:
     A class to manage the actors life-cycles in the CARLA simulator
     """
 
-    def __init__(self, world: carla.World):
+    def __init__(self, world_ref: List[carla.World]):
         """
         Construct a new ActorManager instance
 
         This instance should create after CarlaContext created a connection.
 
-        :param world: carla.World instance
+        :param world_ref: carla.World instance
         """
-        self._carla_world = world
+        self._carla_world_ref = world_ref
         self._registry = set()  # type: Set[Actor]
 
     def __del__(self):
@@ -29,7 +29,7 @@ class ActorManager:
         """
         [Immutable] The carla.World instance that ActorManager operates on
         """
-        return self._carla_world
+        return self._carla_world_ref[0]
 
     @property
     def registry(self) -> Set[Actor]:
