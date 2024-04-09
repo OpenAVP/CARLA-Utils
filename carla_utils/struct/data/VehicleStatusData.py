@@ -2,6 +2,8 @@ import carla
 
 from typing import Union
 
+from ...core import Vector3
+
 
 class VehicleStatusData:
     """
@@ -13,6 +15,10 @@ class VehicleStatusData:
         """
         Construct a new VehicleStatusData instance.
         """
+        # basic info
+        self.speed = None  # type: Union[float, None]  # m/s
+        self.velocity = None  # type: Union[Vector3, None]  # m/s in x, y, z
+        self.acceleration = None  # type: Union[Vector3, None]  # m/s^2 in x, y, z
         # basic control info
         self.throttle = None  # type: Union[float, None]
         self.steer = None  # type: Union[float, None]
@@ -38,6 +44,10 @@ class VehicleStatusData:
         Create a VehicleStatusData instance from a carla.VehicleControl instance.
         """
         data = cls.__new__(cls)
+        # basic info
+        data.velocity = Vector3.from_carla_vector3d(vehicle.get_velocity())
+        data.acceleration = Vector3.from_carla_vector3d(vehicle.get_acceleration())
+        data.speed = data.velocity.magnitude
         # basic control info
         if not isinstance(vehicle, carla.Vehicle):
             return data
