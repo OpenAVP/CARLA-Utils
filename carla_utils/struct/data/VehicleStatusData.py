@@ -48,7 +48,7 @@ class VehicleStatusData:
         data.hand_brake = control.hand_brake
         data.reverse = control.reverse
         data.manual_gear_shift = control.manual_gear_shift
-        data.gear = control.gear
+        data.gear = control.manual_gear
         # steer angles
         data.wheel_steer_angle_FL = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.FL_Wheel)
         data.wheel_steer_angle_FR = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.FR_Wheel)
