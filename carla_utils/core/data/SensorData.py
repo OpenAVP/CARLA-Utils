@@ -2,8 +2,7 @@ import time
 import carla
 from typing import Union
 
-from ...core import Transform
-
+from ..Vector3 import Vector3
 
 class SensorData:
 

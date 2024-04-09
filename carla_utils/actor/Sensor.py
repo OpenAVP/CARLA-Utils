@@ -2,7 +2,7 @@ import carla
 from threading import Event
 
 from .Actor import Actor
-from ..struct.data import SensorData
+from ..core.data import SensorData
 
 
 class Sensor(Actor):

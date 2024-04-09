@@ -2,9 +2,9 @@ import carla
 from typing import Union
 
 from .Actor import Actor
-from ..struct.data import VehicleStatusData
-from ..struct.setting import VehicleAckermannControlSettings
-from ..struct.cmd import VehicleAckermannControlCmd, VehicleDirectControlCmd
+from ..core.data import VehicleStatusData
+from ..core.setting import VehicleAckermannControlSettings
+from ..core.cmd import VehicleAckermannControlCmd, VehicleDirectControlCmd
 
 
 class Vehicle(Actor):
