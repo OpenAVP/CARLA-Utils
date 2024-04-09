@@ -25,14 +25,14 @@ class ActorManager:
     @property
     def carla_world(self) -> carla.World:
         """
-        The carla.World instance that ActorManager operates on
+        [Immutable] The carla.World instance that ActorManager operates on
         """
         return self._carla_world
 
     @property
     def registry(self) -> Set[Actor]:
         """
-        A list of actors that are managed by this ActorManager
+        [Immutable] A list of actors that are managed by this ActorManager
 
         Once an actor is known by the ActorManager, it will be hold in actor registry until ActorManager is destroyed.
         """
