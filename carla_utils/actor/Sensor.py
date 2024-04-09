@@ -19,7 +19,7 @@ class Sensor(Actor):
         self._data = None
         self._event_data_update = Event()
         self._sensor_data_class = SensorData
-        if issubclass(self._sensor_data_class, SensorData):
+        if not issubclass(self._sensor_data_class, SensorData):
             raise ValueError("sensor_data_class must be a subclass of SensorData.")
 
     @property
