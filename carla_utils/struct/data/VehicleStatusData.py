@@ -13,6 +13,7 @@ class VehicleStatusData:
         """
         Construct a new VehicleStatusData instance.
         """
+        # basic control info
         self.throttle = None  # type: Union[float, None]
         self.steer = None  # type: Union[float, None]
         self.brake = None  # type: Union[float, None]
@@ -20,6 +21,11 @@ class VehicleStatusData:
         self.reverse = None  # type: Union[bool, None]
         self.manual_gear_shift = None  # type: Union[bool, None]
         self.gear = None  # type: Union[int, None]
+        # wheel steer angles
+        self.wheel_steer_angle_FL = None  # type: Union[float, None]
+        self.wheel_steer_angle_FR = None  # type: Union[float, None]
+        self.wheel_steer_angle_RL = None  # type: Union[float, None]
+        self.wheel_steer_angle_RR = None  # type: Union[float, None]
 
     def __new__(cls, *args, **kwargs):
         # Prevent instantiation of this class
@@ -27,11 +33,13 @@ class VehicleStatusData:
                                   f'Use from_carla_vehicle_control instead.')
 
     @classmethod
-    def from_carla_vehicle_control(cls, control: carla.VehicleControl) -> 'VehicleStatusData':
+    def from_carla_vehicle(cls, vehicle: carla.Vehicle) -> 'VehicleStatusData':
         """
         Create a VehicleStatusData instance from a carla.VehicleControl instance.
         """
         data = cls.__new__(cls)
+        # basic control info
+        control = vehicle.get_control()
         data.throttle = control.throttle
         data.steer = control.steer
         data.brake = control.brake
@@ -39,4 +47,9 @@ class VehicleStatusData:
         data.reverse = control.reverse
         data.manual_gear_shift = control.manual_gear_shift
         data.gear = control.gear
+        # steer angles
+        data.wheel_steer_angle_FL = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.FL_Wheel)
+        data.wheel_steer_angle_FR = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.FR_Wheel)
+        data.wheel_steer_angle_RL = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.BL_Wheel)
+        data.wheel_steer_angle_RR = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.BR_Wheel)
         return data
