@@ -52,7 +52,7 @@ class Blueprint:
         """
         # type check
         if not isinstance(carla_world, carla.World):
-            raise TypeError(f'carla_world must be a instance of carla.World')
+            raise TypeError(f'carla_world must be a instance of carla.World, got {type(carla_world)}')
 
         # find matched blueprint
         bp_lib = carla_world.get_blueprint_library()  # type: carla.BlueprintLibrary
