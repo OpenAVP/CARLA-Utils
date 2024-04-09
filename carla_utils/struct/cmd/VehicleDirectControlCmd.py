@@ -1,0 +1,52 @@
+import carla
+
+
+class VehicleDirectControlCmd:
+    """
+    A command class representing the direct control command for a vehicle.
+    """
+
+    def __init__(self, *,
+                 throttle: float = 0.0,
+                 steer: float = 0.0,
+                 brake: float = 0.0,
+                 hand_brake: bool = False,
+                 reverse: bool = False,
+                 manual_gear_shift: bool = False,
+                 gear: int = 0):
+        """
+        Construct a VehicleDirectControlCmd instance.
+
+        :param throttle: accelerator pedal opening in [0.0, 1.0].
+                         Exceeding values will be reset to the maximum or minimum value
+        :param steer: steering wheel angle in [-1.0, 1.0].
+                      Exceeding values will be reset to the maximum or minimum value
+        :param brake: brake pedal opening in [0.0, 1.0].
+                      Exceeding values will be reset to the maximum or minimum value
+        :param hand_brake: hand brake status
+        :param reverse: reverse gear status
+        :param manual_gear_shift: manual gear shift status
+        :param gear: gear to shift to, effective only when manual_gear_shift is True
+        """
+        self.throttle = throttle
+        self.steer = steer
+        self.brake = brake
+        self.hand_brake = hand_brake
+        self.reverse = reverse
+        self.manual_gear_shift = manual_gear_shift
+        self.gear = gear
+
+    def as_carla_vehicle_control(self) -> carla.VehicleControl:
+        """
+        Convert the command to a carla.VehicleControl object.
+        :return: carla.VehicleControl instance
+        """
+        return carla.VehicleControl(
+            throttle=self.throttle,
+            steer=self.steer,
+            brake=self.brake,
+            hand_brake=self.hand_brake,
+            reverse=self.reverse,
+            manual_gear_shift=self.manual_gear_shift,
+            gear=self.gear
+        )
