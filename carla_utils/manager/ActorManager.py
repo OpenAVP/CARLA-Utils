@@ -16,20 +16,20 @@ class ActorManager:
         :param world: carla.World instance
         """
         self._carla_world = world
-        self._actor_registry = set()  # type: Set[Actor]
+        self._registry = set()  # type: Set[Actor]
 
     def __del__(self):
         # destroy all actors in registry when ActorManager exit.
-        self.invoke_actor_destroy(self.actor_registry)
+        self.invoke_actor_destroy(self.registry)
 
     @property
-    def actor_registry(self) -> Set[Actor]:
+    def registry(self) -> Set[Actor]:
         """
         A list of actors that are managed by this ActorManager
 
         Once an actor is known by the ActorManager, it will be hold in actor registry until ActorManager is destroyed.
         """
-        return self._actor_registry
+        return self._registry
 
     def new_actor(self, blueprint_name: str) -> Actor:
         """
@@ -39,7 +39,7 @@ class ActorManager:
         :return: Actor instance
         """
         actor = Actor(blueprint_name)
-        self._actor_registry.add(actor)
+        self._registry.add(actor)
         return actor
 
     def new_vehicle(self, blueprint_name: str) -> Vehicle:
@@ -50,7 +50,7 @@ class ActorManager:
         :return: Vehicle instance
         """
         actor = Vehicle(blueprint_name)
-        self._actor_registry.add(actor)
+        self._registry.add(actor)
         return actor
 
     def new_sensor(self, blueprint_name: str) -> Sensor:
@@ -61,7 +61,7 @@ class ActorManager:
         :return: Sensor instance
         """
         actor = Sensor(blueprint_name)
-        self._actor_registry.add(actor)
+        self._registry.add(actor)
         return actor
 
     def invoke_actor_spawn(self, actor: Union[Actor, List[Actor], Set[Actor]]) -> 'ActorManager':
@@ -91,7 +91,7 @@ class ActorManager:
                                                       a.transform.as_carla_transform(),
                                                       attach_to=attach_target)
                 a.invoke_bind_carla_actor(carla_actor)
-                self.actor_registry.add(a)  # idempotent operation, duplicate additions will be ignored
+                self.registry.add(a)  # idempotent operation, duplicate additions will be ignored
             except RuntimeError as e:
                 spawn_exceptions.append(e)
                 continue
