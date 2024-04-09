@@ -152,6 +152,7 @@ class RunningManager:
         """
         settings = self.carla_world.get_settings()   # type: carla.WorldSettings
         settings.synchronous_mode = False
+        settings.fixed_delta_seconds = 0.0
         self.carla_world.apply_settings(settings)
 
     def _control_thread_func(self):
