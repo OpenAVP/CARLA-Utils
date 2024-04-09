@@ -40,37 +40,46 @@ class ActorManager:
         """
         return self._registry
 
-    def new_actor(self, blueprint_name: str) -> Actor:
+    def new_actor(self, blueprint_name: str, *, parent: Union[None, Actor] = None) -> Actor:
         """
         Create a new actor instance.
 
+        :param parent: parent Actor instance
         :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
         :return: Actor instance
         """
         actor = Actor(blueprint_name)
         self._registry.add(actor)
+        if parent:
+            actor.set_parent(parent)
         return actor
 
-    def new_vehicle(self, blueprint_name: str) -> Vehicle:
+    def new_vehicle(self, blueprint_name: str, *, parent: Union[None, Actor] = None) -> Vehicle:
         """
         Create a new vehicle instance.
 
+        :param parent: parent Actor instance
         :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
         :return: Vehicle instance
         """
         actor = Vehicle(blueprint_name)
         self._registry.add(actor)
+        if parent:
+            actor.set_parent(parent)
         return actor
 
-    def new_sensor(self, blueprint_name: str) -> Sensor:
+    def new_sensor(self, blueprint_name: str, *, parent: Union[None, Actor] = None) -> Sensor:
         """
         Create a new sensor instance.
 
+        :param parent: parent Actor instance
         :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
         :return: Sensor instance
         """
         actor = Sensor(blueprint_name)
         self._registry.add(actor)
+        if parent:
+            actor.set_parent(parent)
         return actor
 
     def invoke_actor_spawn(self, actor: Union[Actor, List[Actor], Set[Actor]]) -> 'ActorManager':
@@ -96,9 +105,10 @@ class ActorManager:
         for a in actors:
             attach_target = a.parent.carla_actor if a.parent else None
             try:
-                carla_actor = carla.World.spawn_actor(a.blueprint.as_carla_blueprint(self.carla_world),
-                                                      a.transform.as_carla_transform(),
-                                                      attach_to=attach_target)
+                carla_actor = self.carla_world.spawn_actor(blueprint=a.blueprint.as_carla_blueprint(self.carla_world),
+                                                           transform=a.transform.as_carla_transform(),
+                                                           attach_to=attach_target)
+                self.carla_world.wait_for_tick() # wait for the actor to be spawned
                 a.invoke_bind_carla_actor(carla_actor)
                 self.registry.add(a)  # idempotent operation, duplicate additions will be ignored
             except RuntimeError as e:
