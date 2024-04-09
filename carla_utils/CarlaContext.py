@@ -200,7 +200,7 @@ class CarlaContext:
             return self
         self.running.use_sync_primary_mode(False)
         self.actors.invoke_actor_destroy(self.actors.registry)
-        # self.wait_for_ticks(1)
+        self.wait_for_ticks(5, timeout=2.0)
         # release client
         self._carla_client = None
         return self
