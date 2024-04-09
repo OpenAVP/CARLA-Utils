@@ -1,5 +1,4 @@
 import carla
-
 from typing import Union
 
 from ...core import Vector3
