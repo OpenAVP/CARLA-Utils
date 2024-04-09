@@ -15,7 +15,7 @@ class ActorManager:
 
         This instance should create after CarlaContext created a connection.
 
-        :param world_ref: carla.World instance
+        :param world_ref: A len(1) list that contains the nullable carla.World instance.
         """
         self._carla_world_ref = world_ref
         self._registry = set()  # type: Set[Actor]
