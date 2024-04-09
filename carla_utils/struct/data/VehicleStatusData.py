@@ -39,6 +39,8 @@ class VehicleStatusData:
         """
         data = cls.__new__(cls)
         # basic control info
+        if not isinstance(vehicle, carla.Vehicle):
+            return data
         control = vehicle.get_control()
         data.throttle = control.throttle
         data.steer = control.steer
