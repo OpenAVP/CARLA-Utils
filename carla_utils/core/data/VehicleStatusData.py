@@ -43,6 +43,9 @@ class VehicleStatusData:
         Create a VehicleStatusData instance from a carla.VehicleControl instance.
         """
         data = cls.__new__(cls)
+        # direct return if vehicle is None
+        if vehicle is None:
+            return data
         # basic info
         data.velocity = Vector3.from_carla_vector3d(vehicle.get_velocity())
         data.acceleration = Vector3.from_carla_vector3d(vehicle.get_acceleration())
