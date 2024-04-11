@@ -62,15 +62,13 @@ class Blueprint:
         # set attributes
         for key, value in self.attributes.items():
             attr = bp.get_attribute(key)
-            if not attr:
-                raise RuntimeError(f'Attribute {key} not found in blueprint {self.blueprint_name}')
             if not attr.is_modifiable:
                 raise RuntimeError(f'Attribute {key} is not modifiable in blueprint {self.blueprint_name}')
             # use default value if value is None
             if value is None:
                 value = random.choice(attr.recommended_values)
             # invoke set
-            bp.set_attribute(key, value)
+            bp.set_attribute(str(key), str(value))
 
         # return the blueprint
         return bp
