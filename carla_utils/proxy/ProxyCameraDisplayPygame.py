@@ -90,15 +90,26 @@ class ProxyCameraDisplayPygame(BaseProxy):
             if pipe.closed:
                 break
 
-            # exit if pygame window is closed
-            if pygame.event.get(pygame.QUIT):
-                break
+            # exit if press Ctrl+C, ESC or close pygame window
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self._flag_internal_exit = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self._flag_internal_exit = True
+                    if event.key == pygame.K_c and pygame.key.get_mods() & pygame.KMOD_CTRL:
+                        self._flag_internal_exit = True
 
             # show image
-            if pipe.poll(timeout=self.D_PROCESS_RUNNING_INTERVAL):
-                in_image_data = pickle.loads(pipe.recv())
-                if isinstance(in_image_data, ImageData):
-                    surface = pygame.surfarray.make_surface(in_image_data.as_pygame_surface_data())
+            try:
+                if pipe.poll(timeout=self.D_PROCESS_RUNNING_INTERVAL):
+                    in_image_data = pickle.loads(pipe.recv())
+                    if isinstance(in_image_data, ImageData):
+                        surface = pygame.surfarray.make_surface(in_image_data.as_pygame_surface_data())
+            except KeyboardInterrupt:
+                # if press Ctrl+C, KeyboardInterrupt will be raised
+                # so break the loop without any error
+                break
 
             # update
             pygame_window.blit(surface, (0, 0))
