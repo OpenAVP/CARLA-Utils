@@ -123,8 +123,8 @@ class BaseProxy(ABC):
                                             name=self.name + '-P',
                                             args=(pipe_end_2,),
                                             daemon=True)
-            self.handler_thread.start()
             self.handler_process.start()
+            self.handler_thread.start()
         else:
             self._handler_thread = Thread(target=self.handler_thread_func,
                                           name=self.name + '-T',
