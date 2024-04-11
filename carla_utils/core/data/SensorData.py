@@ -13,10 +13,6 @@ class SensorData:
         self.transform = None  # type: Union[None, Transform]
         self.raw_data = None
 
-    def __new__(cls, *args, **kwargs):
-        # Prevent instantiation of this class
-        raise NotImplementedError(f'Cannot instantiate {cls.__name__}. Use from_carla_measurements instead.')
-
     @classmethod
     def from_carla_measurements(cls, measurements: carla.SensorData) -> 'SensorData':
         """

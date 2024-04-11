@@ -32,11 +32,6 @@ class VehicleStatusData:
         self.wheel_steer_angle_RL = None  # type: Union[float, None]
         self.wheel_steer_angle_RR = None  # type: Union[float, None]
 
-    def __new__(cls, *args, **kwargs):
-        # Prevent instantiation of this class
-        raise NotImplementedError(f'Cannot instantiate {cls.__name__}. '
-                                  f'Use from_carla_vehicle_control instead.')
-
     @classmethod
     def from_carla_vehicle(cls, vehicle: carla.Vehicle) -> 'VehicleStatusData':
         """
@@ -60,7 +55,7 @@ class VehicleStatusData:
         data.hand_brake = control.hand_brake
         data.reverse = control.reverse
         data.manual_gear_shift = control.manual_gear_shift
-        data.gear = control.manual_gear
+        data.gear = control.gear
         # steer angles
         data.wheel_steer_angle_FL = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.FL_Wheel)
         data.wheel_steer_angle_FR = vehicle.get_wheel_steer_angle(carla.VehicleWheelLocation.FR_Wheel)
