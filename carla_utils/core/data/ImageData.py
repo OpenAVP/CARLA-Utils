@@ -53,4 +53,5 @@ class ImageData(SensorData):
         img = img[:, :, :3]
         img = img[:, :, ::-1]
         img = numpy.rot90(img)
+        img = numpy.flip(img, 0)
         return img
