@@ -33,9 +33,6 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
             raise TypeError(f"vehicle must be an instance of Vehicle, got {type(vehicle)} instead.")
         self._vehicle = vehicle
 
-    def __del__(self):
-        self.invoke_stop()
-
     @property
     def vehicle(self) -> Vehicle:
         """
@@ -54,6 +51,8 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
         :param pipe: A Pipe object that connects the Process and the Thread.
         :return: None
         """
+        in_vdcc = None
+
         while self.is_continue():
             # exit if pipe is closed
             if pipe.closed:
@@ -69,20 +68,21 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
                 continue
 
             # handle the VehicleDirectControlCmd input
-            if pipe.poll(self.THREAD_RUNNING_INTERVAL):
-                in_vdcc = pickle.loads(pipe.recv())
-                if not isinstance(in_vdcc, VehicleDirectControlCmd):
-                    continue
-                try:
-                    self.vehicle.invoke_direct_control(in_vdcc)
-                except RuntimeError:
-                    # RuntimeError will be raised if the vehicle is not alive
-                    # It will be handled in the next loop, continue here.
-                    continue
+            if isinstance(in_vdcc, VehicleDirectControlCmd):
+                self.vehicle.invoke_direct_control(in_vdcc)
 
-            # send the VehicleStatusData
+            # update the VehicleStatusData output
             out_vsd = self.vehicle.status
-            pipe.send(pickle.dumps(out_vsd))
+
+            # recv and send data
+            try:
+                if pipe.poll(self.THREAD_RUNNING_INTERVAL):
+                    in_vdcc = pickle.loads(pipe.recv())
+                pipe.send(pickle.dumps(out_vsd))
+            except ConnectionResetError:
+                # if the pipe is closed, break the loop
+                self._flag_internal_exit = True
+                break
 
             # end loop
             continue
@@ -126,7 +126,11 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
                 break
 
             # control pygame tick
-            pygame_clock.tick(1 / self.PROCESS_RUNNING_INTERVAL)
+            try:
+                pygame_clock.tick(1 / self.PROCESS_RUNNING_INTERVAL)
+            except KeyboardInterrupt:
+                # exit if KeyboardInterrupt
+                break
 
             # handler pygame events
             for event in pygame.event.get():
