@@ -61,7 +61,6 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
 
             # exit if process is not alive
             if not (self.handler_process and self.handler_process.is_alive()):
-                print('FUCK')
                 break
 
             # empty loop if vehicle is not alive
