@@ -170,7 +170,6 @@ class CarlaContext:
         # note that KeyboardInterrupt will be caught by signal handler
         while self._flag_internal_exit is False:
             time.sleep(0.1)  # sleep for a while to prevent high CPU usage
-            print('Alive. Press Ctrl+C to exit.')
 
     def invoke_connection_start(self) -> 'CarlaContext':
         """
