@@ -3,6 +3,7 @@ from .ProxyVehicleKeyboardControlPygame import ProxyVehicleKeyboardControlPygame
 from .ProxyCameraDisplayPygame import ProxyCameraDisplayPygame
 from .ProxyImuDataUdp import ProxyImuDataUdp
 from .ProxyGnssDataUdp import ProxyGnssDataUdp
+from .ProxyRadarDataUdp import ProxyRadarDataUdp
 
 
 __all__ = [
@@ -11,4 +12,5 @@ __all__ = [
     'ProxyCameraDisplayPygame',
     'ProxyImuDataUdp',
     'ProxyGnssDataUdp',
+    'ProxyRadarDataUdp',
 ]
