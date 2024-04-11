@@ -127,6 +127,17 @@ class Actor:
             return Vector3()
 
     @property
+    def attributes(self) -> dict:
+        """
+        [Read-only] Actor attributes.
+        :return: a dictionary of actor attributes.
+        """
+        if self.is_alive():
+            return self.carla_actor.attributes
+        else:
+            return self.blueprint.attributes
+
+    @property
     def parent(self) -> 'Actor':
         """
         [Immutable] Actor parent in actor tree.
