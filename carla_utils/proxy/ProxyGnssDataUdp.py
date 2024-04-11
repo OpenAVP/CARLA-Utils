@@ -38,9 +38,9 @@ class ProxyGnssDataUdp(BaseProxy):
         self._target_port = target_port
 
     @property
-    def imu(self) -> Gnss:
+    def gnss(self) -> Gnss:
         """
-        [Immutable] The IMU instance.
+        [Immutable] The GNSS instance.
         """
         return self._gnss
 
@@ -54,7 +54,7 @@ class ProxyGnssDataUdp(BaseProxy):
     def handler_thread_func(self, pipe: Connection):
         while self.is_continue():
             try:
-                pipe.send(pickle.dumps(self.imu.data))
+                pipe.send(pickle.dumps(self.gnss.data))
             except BrokenPipeError:
                 # if the pipe is broken, break the loop without any error
                 self._flag_internal_exit = True
