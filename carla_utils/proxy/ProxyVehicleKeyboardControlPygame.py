@@ -103,7 +103,7 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
         # init pygame settings
         pygame.init()
         pygame.key.set_repeat(0, 300)
-        pygame_window = pygame.display.set_mode(size=(800, 600))
+        pygame_window = pygame.display.set_mode(size=(400, 300))
         pygame_font = pygame.font.SysFont('Console', size=16, bold=True)
         pygame_clock = pygame.time.Clock()
 
@@ -184,13 +184,13 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
             text_line = pygame_font.render('-' * 30, False, (255, 255, 255))
 
             pygame_window.blit(text_throttle, text_throttle.get_rect(topleft=(10, 10)))
-            pygame_window.blit(text_brake, text_brake.get_rect(topleft=(10, 40)))
-            pygame_window.blit(text_steer, text_steer.get_rect(topleft=(10, 70)))
-            pygame_window.blit(text_handbrake, text_handbrake.get_rect(topleft=(10, 100)))
-            pygame_window.blit(text_reverse, text_reverse.get_rect(topleft=(10, 130)))
-            pygame_window.blit(text_line, text_line.get_rect(topleft=(10, 160)))
-            pygame_window.blit(text_speed_mps, text_speed_mps.get_rect(topleft=(10, 190)))
-            pygame_window.blit(text_speed_kmph, text_speed_kmph.get_rect(topleft=(10, 210)))
+            pygame_window.blit(text_brake, text_brake.get_rect(topleft=(10, 30)))
+            pygame_window.blit(text_steer, text_steer.get_rect(topleft=(10, 50)))
+            pygame_window.blit(text_handbrake, text_handbrake.get_rect(topleft=(10, 70)))
+            pygame_window.blit(text_reverse, text_reverse.get_rect(topleft=(10, 90)))
+            pygame_window.blit(text_line, text_line.get_rect(topleft=(10, 110)))
+            pygame_window.blit(text_speed_mps, text_speed_mps.get_rect(topleft=(10, 130)))
+            pygame_window.blit(text_speed_kmph, text_speed_kmph.get_rect(topleft=(10, 150)))
 
             # update pygame
             pygame.display.flip()
