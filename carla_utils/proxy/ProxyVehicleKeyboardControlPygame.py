@@ -145,7 +145,7 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
                     if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                         out_vdcc.steer = min(out_vdcc.steer + 0.1, 1)
                     if event.key == pygame.K_SPACE:
-                        out_vdcc.handbrake = not out_vdcc.handbrake
+                        out_vdcc.hand_brake = not out_vdcc.hand_brake
                     if event.key == pygame.K_r:
                         out_vdcc.reverse = not out_vdcc.reverse
 
