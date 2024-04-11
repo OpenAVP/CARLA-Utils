@@ -2,7 +2,7 @@ import carla
 import re
 from typing import List, Union, Set
 
-from carla_utils.actor import Actor, Vehicle, Sensor, Camera
+from carla_utils.actor import Actor, Vehicle, Sensor, Camera, Imu
 
 
 class ActorManager:
@@ -13,7 +13,8 @@ class ActorManager:
     ACTOR_BLUEPRINT_MATCH = {
         'vehicle.*': Vehicle,
         'sensor.*': Sensor,
-        'sensor.camera.*': Camera
+        'sensor.camera.*': Camera,
+        'sensor.other.imu': Imu,
     }
 
     def __init__(self, world_ref: List[carla.World]):
