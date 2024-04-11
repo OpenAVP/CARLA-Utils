@@ -1,5 +1,4 @@
 import pickle
-import time
 import numpy
 import sys
 import socket
@@ -54,12 +53,12 @@ class ProxyImuDataUdp(BaseProxy):
     def handler_thread_func(self, pipe: Connection):
         while self.is_continue():
             try:
+                self.imu.event_data_update.wait(timeout=self.THREAD_RUNNING_INTERVAL)
                 pipe.send(pickle.dumps(self.imu.data))
             except BrokenPipeError:
                 # if the pipe is broken, break the loop without any error
                 self._flag_internal_exit = True
                 break
-            time.sleep(self.THREAD_RUNNING_INTERVAL)
 
     def handler_process_func(self, pipe: Connection):
         in_imu_data = None  # type: Optional[ImuData]

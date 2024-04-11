@@ -1,5 +1,4 @@
 import pickle
-import time
 import numpy
 import sys
 import socket
@@ -54,12 +53,12 @@ class ProxyGnssDataUdp(BaseProxy):
     def handler_thread_func(self, pipe: Connection):
         while self.is_continue():
             try:
+                self.gnss.event_data_update.wait(timeout=self.THREAD_RUNNING_INTERVAL)
                 pipe.send(pickle.dumps(self.gnss.data))
             except BrokenPipeError:
                 # if the pipe is broken, break the loop without any error
                 self._flag_internal_exit = True
                 break
-            time.sleep(self.THREAD_RUNNING_INTERVAL)
 
     def handler_process_func(self, pipe: Connection):
         in_gnss_data = None  # type: Optional[GnssData]
