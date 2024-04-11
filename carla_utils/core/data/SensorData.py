@@ -26,5 +26,5 @@ class SensorData:
         data.timestamp_wall = time.time()
         data.transform = Transform.from_carla_transform(measurements.transform)
         if hasattr(data, 'raw_data'):
-            data.raw_data = measurements.raw_data
+            data.raw_data = bytes(measurements.raw_data)  # avoid 'memoryview' object
         return data
