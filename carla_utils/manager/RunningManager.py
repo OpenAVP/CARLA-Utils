@@ -141,6 +141,10 @@ class RunningManager:
         :return: None
         """
         settings = self.carla_world.get_settings()   # type: carla.WorldSettings
+        # skip setting if already set
+        if settings.synchronous_mode and settings.fixed_delta_seconds == fixed_delta_time:
+            return
+        # update settings
         settings.fixed_delta_seconds = fixed_delta_time
         settings.synchronous_mode = True
         self.carla_world.apply_settings(settings)
@@ -180,15 +184,16 @@ class RunningManager:
             # calculate client wait time for sync primary mode
             client_wait_time = self.sync_fixed_delta_time
             if self.option_strict_time_mode:
-                client_wait_time = self._sync_fixed_delta_time - self.timespan_realworld_simulation_diff
-                if client_wait_time <= self._sync_fixed_delta_time * 0.1:
-                    client_wait_time = self._sync_fixed_delta_time * 0.1
+                client_wait_time = self.sync_fixed_delta_time - self.timespan_realworld_simulation_diff
+                client_wait_time = max(self.sync_fixed_delta_time * 0.5, client_wait_time)
+                client_wait_time = min(self.sync_fixed_delta_time * 2.0, client_wait_time)
 
             # control
             try:
                 if self.option_sync_primary_mode:
-                    time.sleep(client_wait_time)
+                    # print(client_wait_time)
                     self.carla_world.tick()
+                    time.sleep(client_wait_time)
                 else:
                     self.carla_world.wait_for_tick()
             except AttributeError:
