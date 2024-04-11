@@ -78,7 +78,7 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
             try:
                 if pipe.poll(self.THREAD_RUNNING_INTERVAL):
                     in_vdcc = pickle.loads(pipe.recv())
-                pipe.send(pickle.dumps(out_vsd))
+                pipe.send(pickle.dumps(out_vsd))  # send interval is basically equal to self.THREAD_RUNNING_INTERVAL
             except ConnectionResetError:
                 # if the pipe is closed, break the loop
                 self._flag_internal_exit = True
