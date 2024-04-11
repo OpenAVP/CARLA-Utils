@@ -25,11 +25,19 @@ class BaseProxy(ABC):
 
     """
 
-    PROCESS_JOIN_TIMEOUT = 2.0  # in seconds
-    THEAD_JOIN_TIMEOUT = 2.0  # in seconds
+    D_PROCESS_JOIN_TIMEOUT = 2.0  # in seconds
+    D_PROCESS_RUNNING_INTERVAL = 0.01  # in seconds
+    D_THREAD_JOIN_TIMEOUT = 2.0  # in seconds
+    D_THREAD_RUNNING_INTERVAL = 0.01  # in seconds
+
     USE_PROCESS = True  # you can disable process for lightweight proxies
 
-    def __init__(self, *, name: str = None):
+    def __init__(self, *,
+                 name: str = None,
+                 process_join_timeout: float = D_PROCESS_JOIN_TIMEOUT,
+                 process_running_interval: float = D_PROCESS_RUNNING_INTERVAL,
+                 thread_join_timeout: float = D_THREAD_JOIN_TIMEOUT,
+                 thread_running_interval: float = D_THREAD_RUNNING_INTERVAL):
         """
         Construct a new BaseProxy object.
         :param name: Name of the proxy. If not set, it will return the class name and the first 8 characters of the ID.
@@ -37,6 +45,10 @@ class BaseProxy(ABC):
         # basic
         self._id = uuid.uuid4()
         self._name = name
+        self._process_join_timeout = process_join_timeout
+        self._process_running_interval = process_running_interval
+        self._thread_join_timeout = thread_join_timeout
+        self._thread_running_interval = thread_running_interval
         # handler
         self._handler_thread = None  # Union[Thread, Process]
         self._handler_process = None  # Union[Thread, Process]
@@ -68,6 +80,34 @@ class BaseProxy(ABC):
     @property
     def handler_thread(self) -> Thread:
         return self._handler_thread
+
+    @property
+    def PROCESS_JOIN_TIMEOUT(self) -> float:
+        """
+        [Read-Only] Process join timeout in seconds.
+        """
+        return self._process_join_timeout
+
+    @property
+    def PROCESS_RUNNING_INTERVAL(self) -> float:
+        """
+        [Read-Only] Expected Value. Process running interval in seconds. 100Hz == 0.01s
+        """
+        return self._process_running_interval
+
+    @property
+    def THEAD_JOIN_TIMEOUT(self) -> float:
+        """
+        [Read-Only] Thread join timeout in seconds.
+        """
+        return self._thread_join_timeout
+
+    @property
+    def THEAD_RUNNING_INTERVAL(self) -> float:
+        """
+        [Read-Only] Expected Value. Thread running interval in seconds. 100Hz == 0.01s
+        """
+        return self._thread_running_interval
 
     def is_continue(self) -> bool:
         return not self._flag_internal_exit
