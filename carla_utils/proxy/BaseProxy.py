@@ -1,6 +1,7 @@
 import uuid
 from threading import Thread
 from multiprocessing import Process, Pipe
+from multiprocessing.connection import Connection
 from abc import ABC, abstractmethod
 
 
@@ -105,9 +106,9 @@ class BaseProxy(ABC):
         return self
 
     @abstractmethod
-    def handler_process_func(self, pipe):
+    def handler_process_func(self, pipe: Connection):
         pass
 
     @abstractmethod
-    def handler_thread_func(self, pipe):
+    def handler_thread_func(self, pipe: Connection):
         pass
