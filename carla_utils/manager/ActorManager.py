@@ -1,13 +1,20 @@
 import carla
+import re
 from typing import List, Union, Set
 
-from carla_utils.actor import Actor, Vehicle, Sensor
+from carla_utils.actor import Actor, Vehicle, Sensor, Camera
 
 
 class ActorManager:
     """
     A class to manage the actors life-cycles in the CARLA simulator
     """
+
+    ACTOR_BLUEPRINT_MATCH = {
+        'vehicle.*': Vehicle,
+        'sensor.*': Sensor,
+        'sensor.camera.*': Camera
+    }
 
     def __init__(self, world_ref: List[carla.World]):
         """
@@ -40,43 +47,25 @@ class ActorManager:
         """
         return self._registry
 
-    def new_actor(self, blueprint_name: str, *, parent: Union[None, Actor] = None, **kwargs) -> Actor:
+    def new_actor(self,
+                  blueprint_name: str,
+                  *,
+                  actor_type: Union[None, type] = None,
+                  parent: Union[None, Actor] = None, **kwargs):
         """
         Create a new actor instance.
 
+        :param actor_type: the type of actor to create, default is Actor
         :param parent: parent Actor instance
         :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
-        :return: Actor instance
+        :return: Actor instance maybe subclass of Actor
         """
-        actor = Actor(blueprint_name, **kwargs)
-        self._registry.add(actor)
-        if parent:
-            actor.set_parent(parent)
-        return actor
+        # detect actor type
+        if actor_type is None:
+            actor_type = self._find_actor_type_by_blueprint(blueprint_name)
 
-    def new_vehicle(self, blueprint_name: str, *, parent: Union[None, Actor] = None, **kwargs) -> Vehicle:
-        """
-        Create a new vehicle instance.
-
-        :param parent: parent Actor instance
-        :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
-        :return: Vehicle instance
-        """
-        actor = Vehicle(blueprint_name, **kwargs)
-        self._registry.add(actor)
-        if parent:
-            actor.set_parent(parent)
-        return actor
-
-    def new_sensor(self, blueprint_name: str, *, parent: Union[None, Actor] = None, **kwargs) -> Sensor:
-        """
-        Create a new sensor instance.
-
-        :param parent: parent Actor instance
-        :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
-        :return: Sensor instance
-        """
-        actor = Sensor(blueprint_name, **kwargs)
+        # spawn and register actor
+        actor = actor_type(blueprint_name, **kwargs)
         self._registry.add(actor)
         if parent:
             actor.set_parent(parent)
@@ -144,3 +133,20 @@ class ActorManager:
             # actor will not be removed from registry until ActorManger is destroyed
 
         return self
+
+    def _find_actor_type_by_blueprint(self, blueprint_name: str) -> type:
+        """
+        Find the actor type by blueprint name
+
+        :param blueprint_name: the blueprint name str defined in carla.BlueprintLibrary
+        :return: the actor type
+        """
+        available_types = []
+        for pattern, actor_type in self.ACTOR_BLUEPRINT_MATCH.items():
+            if re.match(pattern, blueprint_name):
+                available_types.append(actor_type)
+        # find the most child class
+        if available_types:
+            return sorted(available_types, key=lambda x: len(x.__mro__))[-1]
+        else:
+            return Actor
