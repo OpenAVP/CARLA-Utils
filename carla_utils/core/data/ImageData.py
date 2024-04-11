@@ -27,14 +27,10 @@ class ImageData(SensorData):
         """
         data = cls()
         # dump data
-        data.frame = measurements.frame
-        data.timestamp_carla = measurements.timestamp
-        data.timestamp_wall = time.time()
+        data = cls.initialize_sensor_basic_data(data, measurements)
         data.fov = measurements.fov
         data.height = measurements.height
         data.width = measurements.width
-        data.transform = Transform.from_carla_transform(measurements.transform)
-        data.raw_data = bytes(measurements.raw_data)  # avoid 'memoryview' object
 
         # create image
         data.image = numpy.ndarray(

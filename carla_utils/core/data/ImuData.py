@@ -22,10 +22,7 @@ class ImuData(SensorData):
         :return: SensorData instance
         """
         data = cls()
-        data.frame = measurements.frame
-        data.timestamp_carla = measurements.timestamp
-        data.timestamp_wall = time.time()
-        data.transform = Transform.from_carla_transform(measurements.transform)
+        data = cls.initialize_sensor_basic_data(data, measurements)
 
         # special imu data
         data.accelerometer = Vector3.from_carla_vector3d(measurements.accelerometer)

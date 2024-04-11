@@ -4,6 +4,7 @@ from typing import Union
 
 from ..Transform import Transform
 
+
 class SensorData:
 
     def __init__(self):
@@ -21,10 +22,15 @@ class SensorData:
         :return: SensorData instance
         """
         data = cls()
+        data = cls.initialize_sensor_basic_data(data, measurements)
+        return data
+
+    @staticmethod
+    def initialize_sensor_basic_data(data, measurements: carla.SensorData):
         data.frame = measurements.frame
         data.timestamp_carla = measurements.timestamp
         data.timestamp_wall = time.time()
         data.transform = Transform.from_carla_transform(measurements.transform)
-        if hasattr(data, 'raw_data'):
+        if hasattr(measurements, 'raw_data'):
             data.raw_data = bytes(measurements.raw_data)  # avoid 'memoryview' object
         return data
