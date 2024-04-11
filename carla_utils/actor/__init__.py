@@ -4,6 +4,7 @@ from .Vehicle import Vehicle
 from .Camera import Camera
 from .Imu import Imu
 from .Gnss import Gnss
+from .Radar import Radar
 
 __all__ = [
     'Actor',
@@ -12,4 +13,5 @@ __all__ = [
     'Camera',
     'Imu',
     'Gnss',
+    'Radar',
 ]

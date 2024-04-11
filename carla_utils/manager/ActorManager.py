@@ -2,7 +2,7 @@ import carla
 import re
 from typing import List, Union, Set
 
-from carla_utils.actor import Actor, Vehicle, Sensor, Camera, Imu, Gnss
+from carla_utils.actor import Actor, Vehicle, Sensor, Camera, Imu, Gnss, Radar
 
 
 class ActorManager:
@@ -16,6 +16,7 @@ class ActorManager:
         'sensor.camera.*': Camera,
         'sensor.other.imu': Imu,
         'sensor.other.gnss': Gnss,
+        'sensor.other.radar': Radar,
     }
 
     def __init__(self, world_ref: List[carla.World]):
