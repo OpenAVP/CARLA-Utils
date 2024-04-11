@@ -137,6 +137,22 @@ class ProxyCameraDisplayPygame(BaseProxy):
             pygame_window.blit(surface, (0, 0))
             pygame.display.flip()
 
+    def handler_thread_func(self, pipe: Connection):
+        while self.is_continue():
+            # exit if pipe is closed
+            if pipe.closed:
+                break
+
+            # get image from camera
+            self.camera.event_data_update.wait(timeout=self.THREAD_RUNNING_INTERVAL)
+            send_data = pickle.dumps(self.camera.data)
+            try:
+                pipe.send(send_data)
+            except BrokenPipeError:
+                # if process is closed, BrokenPipeError will be raised
+                # so break the loop
+                break
+
     @staticmethod
     def _new_debug_texture(width, height) -> numpy.ndarray:
         """
@@ -154,19 +170,3 @@ class ProxyCameraDisplayPygame(BaseProxy):
         texture = texture[:, :, ::-1]
         texture = texture.swapaxes(0, 1)
         return texture
-
-    def handler_thread_func(self, pipe: Connection):
-        while self.is_continue():
-            # exit if pipe is closed
-            if pipe.closed:
-                break
-
-            # get image from camera
-            self.camera.event_data_update.wait(timeout=self.THREAD_RUNNING_INTERVAL)
-            send_data = pickle.dumps(self.camera.data)
-            try:
-                pipe.send(send_data)
-            except BrokenPipeError:
-                # if process is closed, BrokenPipeError will be raised
-                # so break the loop
-                break
