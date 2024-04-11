@@ -18,7 +18,7 @@ class Actor:
         """
         # basic info
         self._id = uuid.uuid1()
-        self._blueprint = Blueprint(blueprint_name)
+        self._blueprint = Blueprint(blueprint_name, **kwargs)
         self._transform_init = Transform()
         # actor tree
         self._parent = None
