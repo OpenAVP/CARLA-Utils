@@ -10,12 +10,12 @@ class Sensor(Actor):
     Sensor is a wrapper class for carla.Sensor.
     """
 
-    def __init__(self, blueprint_name: str):
+    def __init__(self, blueprint_name: str, **kwargs):
         """
         Construct a Sensor instance.
         :param blueprint_name:
         """
-        super().__init__(blueprint_name)
+        super().__init__(blueprint_name, **kwargs)
         self._data = None
         self._event_data_update = Event()
         self._sensor_data_class = SensorData

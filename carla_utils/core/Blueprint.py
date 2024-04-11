@@ -10,13 +10,14 @@ class Blueprint:
     When actor spawn procedure invoked, this class will be converted to carla.Blueprint instance.
     """
 
-    def __init__(self, blueprint_name: str):
+    def __init__(self, blueprint_name: str, **kwargs):
         """
-
-        :param blueprint_name:
+        Construct a Blueprint instance with arguments.
+        :param blueprint_name: blueprint name, defined in the carla blueprint library
+        :param kwargs: attribute key-value pairs
         """
         self._blueprint_name = blueprint_name  # read-only, expose by property method
-        self.attributes = dict()
+        self.attributes = kwargs
 
     @property
     def blueprint_name(self) -> str:

@@ -12,8 +12,8 @@ class Vehicle(Actor):
     Vehicle is a wrapper for carla.Vehicle.
     """
 
-    def __init__(self, blueprint_name: str):
-        super().__init__(blueprint_name)
+    def __init__(self, blueprint_name: str, **kwargs):
+        super().__init__(blueprint_name, **kwargs)
 
     @property
     def carla_actor(self) -> carla.Vehicle:

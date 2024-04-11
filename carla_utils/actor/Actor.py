@@ -10,10 +10,11 @@ class Actor:
     Actor is a wrapper class for carla.Actor.
     """
 
-    def __init__(self, blueprint_name: str):
+    def __init__(self, blueprint_name: str, **kwargs):
         """
         Construct a Actor instance.
         :param blueprint_name: the name of the blueprint.
+        :param kwargs: other optional arguments for actor blueprint attribute.
         """
         # basic info
         self._id = uuid.uuid1()

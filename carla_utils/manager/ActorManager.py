@@ -40,7 +40,7 @@ class ActorManager:
         """
         return self._registry
 
-    def new_actor(self, blueprint_name: str, *, parent: Union[None, Actor] = None) -> Actor:
+    def new_actor(self, blueprint_name: str, *, parent: Union[None, Actor] = None, **kwargs) -> Actor:
         """
         Create a new actor instance.
 
@@ -48,13 +48,13 @@ class ActorManager:
         :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
         :return: Actor instance
         """
-        actor = Actor(blueprint_name)
+        actor = Actor(blueprint_name, **kwargs)
         self._registry.add(actor)
         if parent:
             actor.set_parent(parent)
         return actor
 
-    def new_vehicle(self, blueprint_name: str, *, parent: Union[None, Actor] = None) -> Vehicle:
+    def new_vehicle(self, blueprint_name: str, *, parent: Union[None, Actor] = None, **kwargs) -> Vehicle:
         """
         Create a new vehicle instance.
 
@@ -62,13 +62,13 @@ class ActorManager:
         :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
         :return: Vehicle instance
         """
-        actor = Vehicle(blueprint_name)
+        actor = Vehicle(blueprint_name, **kwargs)
         self._registry.add(actor)
         if parent:
             actor.set_parent(parent)
         return actor
 
-    def new_sensor(self, blueprint_name: str, *, parent: Union[None, Actor] = None) -> Sensor:
+    def new_sensor(self, blueprint_name: str, *, parent: Union[None, Actor] = None, **kwargs) -> Sensor:
         """
         Create a new sensor instance.
 
@@ -76,7 +76,7 @@ class ActorManager:
         :param blueprint_name: blueprint name str defined in carla.BlueprintLibrary
         :return: Sensor instance
         """
-        actor = Sensor(blueprint_name)
+        actor = Sensor(blueprint_name, **kwargs)
         self._registry.add(actor)
         if parent:
             actor.set_parent(parent)
