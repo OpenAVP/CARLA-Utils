@@ -102,7 +102,7 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
         """
         # init pygame settings
         pygame.init()
-        pygame.key.set_repeat(10, 300)
+        pygame.key.set_repeat(0, 300)
         pygame_window = pygame.display.set_mode(size=(800, 600))
         pygame_font = pygame.font.SysFont('Console', size=16, bold=True)
         pygame_clock = pygame.time.Clock()
