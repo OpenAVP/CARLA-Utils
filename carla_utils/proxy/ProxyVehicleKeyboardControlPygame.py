@@ -69,7 +69,7 @@ class ProxyVehicleKeyboardControlPygame(BaseProxy):
                 continue
 
             # handle the VehicleDirectControlCmd input
-            if pipe.poll(self.THEAD_RUNNING_INTERVAL):
+            if pipe.poll(self.THREAD_RUNNING_INTERVAL):
                 in_vdcc = pickle.loads(pipe.recv())
                 if not isinstance(in_vdcc, VehicleDirectControlCmd):
                     continue

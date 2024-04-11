@@ -102,14 +102,14 @@ class BaseProxy(ABC):
         return self._process_running_interval
 
     @property
-    def THEAD_JOIN_TIMEOUT(self) -> float:
+    def THREAD_JOIN_TIMEOUT(self) -> float:
         """
         [Read-Only] Thread join timeout in seconds.
         """
         return self._thread_join_timeout
 
     @property
-    def THEAD_RUNNING_INTERVAL(self) -> float:
+    def THREAD_RUNNING_INTERVAL(self) -> float:
         """
         [Read-Only] Expected Value. Thread running interval in seconds. 100Hz == 0.01s
         """
@@ -155,7 +155,7 @@ class BaseProxy(ABC):
             self.handler_process.join(timeout=self.PROCESS_JOIN_TIMEOUT)
             self.handler_process.terminate()
         if self.handler_thread and self.handler_thread.is_alive():
-            self.handler_thread.join(timeout=self.THEAD_JOIN_TIMEOUT)
+            self.handler_thread.join(timeout=self.THREAD_JOIN_TIMEOUT)
 
         self._handler_process = None
         self._handler_process = None
