@@ -2,6 +2,7 @@ import pickle
 import pygame
 import numpy
 from multiprocessing.connection import Connection
+from typing import Optional
 
 from ..actor import Camera
 from ..core.data import ImageData
@@ -16,6 +17,7 @@ class ProxyCameraDisplayPygame(BaseProxy):
                  name: str = None,
                  fullscreen: bool = False,
                  screen: int = 0,
+                 window_size: tuple = (None, None),
                  process_join_timeout: float = BaseProxy.D_PROCESS_JOIN_TIMEOUT,
                  process_running_interval: float = BaseProxy.D_PROCESS_RUNNING_INTERVAL,
                  thread_join_timeout: float = BaseProxy.D_THREAD_JOIN_TIMEOUT,
@@ -30,6 +32,7 @@ class ProxyCameraDisplayPygame(BaseProxy):
         self._camera = camera
         self._fullscreen = fullscreen
         self._screen = screen
+        self._window_size = window_size
 
     @property
     def camera(self) -> Camera:
@@ -46,6 +49,17 @@ class ProxyCameraDisplayPygame(BaseProxy):
         :return:
         """
         return int(self.camera.attributes.get('image_size_x')), int(self.camera.attributes.get('image_size_y'))
+
+    @property
+    def override_size(self) -> Optional[tuple]:
+        """
+        [Immutable] The size of the window, defined by user. (width/x, height/y)
+        :return:
+        """
+        if self._window_size[0] is not int or self._window_size[1] is not int:
+            return None
+        else:
+            return self._window_size
 
     @property
     def fullscreen(self) -> bool:
@@ -75,8 +89,16 @@ class ProxyCameraDisplayPygame(BaseProxy):
             pygame_window_mode = pygame.display.list_modes(0, pygame.FULLSCREEN, 0)
 
         # setup pygame window
-        pygame_window_size = pygame_window_mode[0] if self.fullscreen else self.source_size
-        pygame_window = pygame.display.set_mode(pygame_window_mode[0] if self.fullscreen else self.source_size,
+        # TODO: Here are some bugs in fullscreen mode, it will fix in the future
+        #  1. The window size is not correct, it will always choose the largest size
+        #  2. Only join display is supported, mirror or single mode will cause system level resolution change
+        if self.override_size is not None:
+            pygame_window_size = self.override_size
+        elif self.fullscreen:
+            pygame_window_size = pygame_window_mode[0]
+        else:
+            pygame_window_size = self.source_size
+        pygame_window = pygame.display.set_mode(pygame_window_size,
                                                 pygame.FULLSCREEN if self.fullscreen else 0,
                                                 self.screen)
 
