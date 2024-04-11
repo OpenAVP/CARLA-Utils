@@ -24,7 +24,7 @@ class GnssData(SensorData):
         data = cls()  # type: GnssData
         data = cls.initialize_sensor_basic_data(data, measurements)
 
-        # special imu data
+        # special gnss data
         data.altitude = float(measurements.altitude)
         data.latitude = float(measurements.latitude)
         data.longitude = float(measurements.longitude)
