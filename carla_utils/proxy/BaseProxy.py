@@ -75,10 +75,16 @@ class BaseProxy(ABC):
 
     @property
     def handler_process(self) -> Process:
+        """
+        [Immutable] Handler process instance.
+        """
         return self._handler_process
 
     @property
     def handler_thread(self) -> Thread:
+        """
+        [Immutable] Handler thread instance.
+        """
         return self._handler_thread
 
     @property
@@ -110,9 +116,16 @@ class BaseProxy(ABC):
         return self._thread_running_interval
 
     def is_continue(self) -> bool:
+        """
+        Should while loop in the handler_thread_func or handler_process_func continue?
+        :return:
+        """
         return not self._flag_internal_exit
 
     def invoke_start(self) -> 'BaseProxy':
+        """
+        Start the proxy.
+        """
         if self.USE_PROCESS:
             pipe_end_1, pipe_end_2 = Pipe()
             self._handler_thread = Thread(target=self.handler_thread_func,
@@ -133,6 +146,9 @@ class BaseProxy(ABC):
         return self
 
     def invoke_stop(self) -> 'BaseProxy':
+        """
+        Stop the proxy. It will automatically call when the object is deleted.
+        """
         self._flag_internal_exit = True
 
         if self.handler_process and self.handler_process.is_alive():
@@ -147,8 +163,23 @@ class BaseProxy(ABC):
 
     @abstractmethod
     def handler_process_func(self, pipe: Connection):
+        """
+        A handler function running in a separate process.
+        It is used to handle the communication with the external source in a separate process.
+        IO and data post-processing should be implemented in the Process.
+
+        :param pipe: A pipe-end to communicate with the handler_thread_func.
+        :return: None
+        """
         pass
 
     @abstractmethod
     def handler_thread_func(self, pipe: Connection):
+        """
+        A handler function running in a thread.
+        It is used to handle the communication with the CarlaContext source in a single GIL.
+
+        :param pipe: A pipe-end to communicate with the handler_thread_func.
+        :return: None
+        """
         pass
