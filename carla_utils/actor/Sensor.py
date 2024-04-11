@@ -46,12 +46,6 @@ class Sensor(Actor):
         """
         return self._event_data_update
 
-    def invoke_start_listen(self) -> 'Sensor':
-        pass
-
-    def invoke_stop_listen(self) -> 'Sensor':
-        pass
-
     def listener(self, measurement: carla.SensorData):
         """
         The main listener function for the sensor.
@@ -66,3 +60,16 @@ class Sensor(Actor):
         # flash the event
         self._event_data_update.set()
         self._event_data_update.clear()
+
+    def on_actor_bind(self):
+        """
+        Start listening to the sensor when the actor is bound.
+        :return:
+        """
+        self.carla_actor.listen(lambda measurement: self.listener(measurement))
+
+    def on_actor_destroy(self):
+        """
+        Stop listening to the sensor when the actor is destroyed.
+        """
+        self.carla_actor.stop()
