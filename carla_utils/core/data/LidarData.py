@@ -38,8 +38,8 @@ class LidarData(SensorData):
         data = cls.initialize_sensor_basic_data(data, measurements)
 
         # special gnss data
-        data.channels = carla.LidarMeasurement.channels
-        data.horizontal_angle = carla.LidarMeasurement.horizontal_angle
+        data.channels = measurements.channels
+        data.horizontal_angle = measurements.horizontal_angle
         data.points_ndarray = numpy.frombuffer(data.raw_data, dtype=numpy.dtype([
             ('x', numpy.float32),
             ('y', numpy.float32),
