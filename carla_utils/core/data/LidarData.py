@@ -40,11 +40,8 @@ class LidarData(SensorData):
         # special gnss data
         data.channels = measurements.channels
         data.horizontal_angle = measurements.horizontal_angle
-        data.points_ndarray = numpy.frombuffer(data.raw_data, dtype=numpy.dtype([
-            ('x', numpy.float32),
-            ('y', numpy.float32),
-            ('z', numpy.float32),
-            ('intensity', numpy.float32)]))
+        data.points_ndarray = numpy.fromstring(data.raw_data, dtype=numpy.float32)
+        data.points_ndarray = numpy.reshape(data.points_ndarray, (int(data.points_ndarray.shape[0] / 4), 4))
         for i in range(0, len(data.points_ndarray)):
             data.points.append(LidarData.Point(data.points_ndarray[i][0],
                                                data.points_ndarray[i][1],
