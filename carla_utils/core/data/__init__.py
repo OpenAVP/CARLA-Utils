@@ -4,6 +4,7 @@ from .ImageData import ImageData
 from .ImuData import ImuData
 from .GnssData import GnssData
 from .RadarData import RadarData
+from .LidarData import LidarData
 
 __all__ = [
     'SensorData',
@@ -12,4 +13,5 @@ __all__ = [
     'ImuData',
     'GnssData',
     'RadarData',
+    'LidarData',
 ]
