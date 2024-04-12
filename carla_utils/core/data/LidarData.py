@@ -48,4 +48,7 @@ class LidarData(SensorData):
                                                data.points_ndarray[i][2],
                                                data.points_ndarray[i][3]))
 
+        # TODO: There is a bug causing the 0 points received from the lidar sensor
+        # print(len(data.points))
+
         return data
