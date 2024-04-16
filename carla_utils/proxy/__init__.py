@@ -4,7 +4,7 @@ from .ProxyCameraDisplayPygame import ProxyCameraDisplayPygame
 from .ProxyImuDataUdp import ProxyImuDataUdp
 from .ProxyGnssDataUdp import ProxyGnssDataUdp
 from .ProxyRadarDataUdp import ProxyRadarDataUdp
-
+from .ProxyLidarDataUdp import ProxyLidarDataUdp
 
 __all__ = [
     'BaseProxy',
@@ -13,4 +13,5 @@ __all__ = [
     'ProxyImuDataUdp',
     'ProxyGnssDataUdp',
     'ProxyRadarDataUdp',
+    'ProxyLidarDataUdp',
 ]
