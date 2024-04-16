@@ -25,7 +25,7 @@ class Location(Vector3):
         :param y: distance from the origin along the Y-axis
         :param z: distance from the origin along the Z-axis
         """
-        super().__init__()
+        super().__init__(x=x, y=y, z=z)
 
     def as_carla_location(self) -> carla.Location:
         """
