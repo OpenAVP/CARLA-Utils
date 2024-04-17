@@ -1,7 +1,6 @@
 import time
 import pickle
 import pygame
-from typing import Union
 
 from .BaseProxy import BaseProxy
 from ..actor import Vehicle
