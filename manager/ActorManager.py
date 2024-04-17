@@ -2,7 +2,7 @@ import carla
 import re
 from typing import List, Union, Set
 
-from carla_utils.actor import Actor, Vehicle, Sensor, Camera, Imu, Gnss, Radar, Lidar
+from ..actor import Actor, Vehicle, Sensor, Camera, Imu, Gnss, Radar, Lidar
 
 
 class ActorManager:

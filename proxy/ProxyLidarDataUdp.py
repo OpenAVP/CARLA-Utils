@@ -1,6 +1,4 @@
 import pickle
-import numpy
-import sys
 import socket
 from multiprocessing.connection import Connection
 from typing import Optional
