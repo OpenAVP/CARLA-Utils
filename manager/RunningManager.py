@@ -132,6 +132,9 @@ class RunningManager:
             self._sync_fixed_delta_time = fixed_delta_time
         # set strict time mode
         self._option_strict_time_mode = strict_time_mode
+        # reset timer
+        self._time_realworld_begin = 0.0
+        self._time_simulation_begin = 0.0
         return self
 
     def _invoke_enter_sync_primary_mode(self, fixed_delta_time: float):
